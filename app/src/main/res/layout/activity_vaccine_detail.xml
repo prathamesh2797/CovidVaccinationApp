@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ededf2"
+    tools:context=".VaccineDetailActivity">
+
+    <EditText
+        android:id="@+id/et_search"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:hint="Search"
+        android:drawableLeft="@drawable/ic_searcch"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
+        android:layout_marginLeft="10dp"
+        android:focusedByDefault="false"
+        android:background="@drawable/edit_text_shadow"
+        android:elevation="@dimen/cardview_default_elevation"
+        android:shadowColor="@color/design_default_color_primary"
+        android:layout_marginRight="10dp"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/et_search"
+        android:visibility="gone"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        />
+
+    <com.leo.simplearcloader.SimpleArcLoader
+        android:id="@+id/arc_loader"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        app:arc_style="simple_arc"
+        android:visibility="visible"/>
+
+</RelativeLayout>
