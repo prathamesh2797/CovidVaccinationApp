@@ -1,38 +1,35 @@
 package com.example.covidvaccination
 
 import android.view.LayoutInflater
-import android.widget.Adapter
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.covidvaccination.databinding.SampleVaccineBinding
 
-class VaccineAdapter(var centerList: ArrayList<VaccineModel>):
+class VaccineAdapter(var centerList: ArrayList<VaccineModel>) :
     RecyclerView.Adapter<VaccineAdapter.ViewHolder>() {
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    private lateinit var binding: SampleVaccineBinding
 
-        val tvCenterName : TextView = itemView.findViewById(R.id.tv_centreName)
-        val tvCenterAddress : TextView = itemView.findViewById(R.id.tv_centreLocation)
-        val tvCenterTimings : TextView = itemView.findViewById(R.id.tv_centreTimings)
-        val tvVaccineName : TextView = itemView.findViewById(R.id.tv_vaccine_name)
-        val tvVaccineFee : TextView = itemView.findViewById(R.id.tv_fee)
-        val tvAgeLimit : TextView = itemView.findViewById(R.id.tv_age_limit)
-        val tvAvailability : TextView = itemView.findViewById(R.id.tv_availability)
 
-    }
+    inner class ViewHolder(itemView: SampleVaccineBinding) : RecyclerView.ViewHolder(itemView.root)
 
-    fun filterList(filterList: ArrayList<VaccineModel>){
 
-        centerList =filterList
-notifyDataSetChanged()
-
-    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.sample_vaccine, parent, false)
-        return ViewHolder(itemView)
+        binding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.sample_vaccine,
+            parent,
+            false
+        )
+        return ViewHolder(binding)
     }
+
+    fun filterList(filterList: ArrayList<VaccineModel>) {
+        centerList = filterList
+        notifyDataSetChanged()
+    }
+
 
     override fun getItemCount(): Int {
 
@@ -41,15 +38,18 @@ notifyDataSetChanged()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val center = centerList[position]
-        holder.tvCenterName.text = center.centerName
-        holder.tvCenterAddress.text = center.centerAddress
-        holder.tvCenterTimings.text = ("From :" + center.centerFromTime + " To :"+ center.centerToTime)
-        holder.tvVaccineName.text = center.vaccineName
-        holder.tvVaccineFee.text = center.feeType
-        holder.tvAgeLimit.text = ("Age Limit: " + center.ageLimit.toString())
-        holder.tvAvailability.text = ("Availability : " + center.availableCapacity.toString())
-
-
+        with(holder) {
+            binding.apply {
+                with(centerList[position]) {
+                    tvCentreName.text = this.centerName.toString()
+                    tvCentreLocation.text = this.centerAddress.toString()
+                    tvCentreTimings.text =
+                        "From :${this.centerFromTime} To :${this.centerToTime.toString()}"
+                    tvVaccineName.text = this.vaccineName.toString()
+                    tvFee.text = this.feeType.toString()
+                    tvAvailability.text = "Availability : ${this.availableCapacity.toString()}"
+                }
+            }
+        }
     }
 }
